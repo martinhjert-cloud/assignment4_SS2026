@@ -121,9 +121,23 @@ Returns Promise that resolves to cocktail object
 We call https://www.thecocktaildb.com/api/json/v1/1/search.php?s=DRINK_INGREDIENT to get a list of cocktails
 Don't forget encodeURIComponent()
 If no cocktails found, fetch random
-*/-
-function fetchCocktailByDrinkIngredient(drinkIngredient) {
-    // Fill in
+*/
+//Svar Martin
+async function fetchCocktailByDrinkIngredient(drinkIngredient) {
+  let url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" 
+            + encodeURIComponent(drinkIngredient);
+
+  let response = await fetch(url);
+  let data = await response.json();
+ 
+  if (data.drinks) {
+    return data.drinks[0]; // returner første cocktail
+  } else {
+    // hvis ingen funnet -> hent tilfeldig
+    return fetchRandomCocktail();
+  }
+}
+
 }
 
 /*
